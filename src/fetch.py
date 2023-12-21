@@ -73,7 +73,7 @@ def talks() -> list[Talk]:
 
 def video() -> Video:
     url = (f'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=1'
-           f'&playlistId=PL0EuBuKK-s1EL-K3okpYwR0QZbAPRVmEG&key={getenv('YOUTUBE_API_KEY')}')
+           f'&playlistId=PL0EuBuKK-s1EL-K3okpYwR0QZbAPRVmEG&key={getenv("YOUTUBE_API_KEY")}')
     response = get(url).json()
     snippet = response['items'][0]['snippet']
     return Video(snippet['resourceId']['videoId'], snippet['title'])
