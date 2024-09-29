@@ -10,14 +10,19 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
       - name: Checkout profile repo
         uses: actions/checkout@v4
         with:
           repository: nfrankel/nfrankel
           path: nfrankel
           token:  ${{ secrets.NFRANKEL_GITHUB_TOKEN }}
+          fetch-depth: 1
       - name: Install dependencies via Poetry
         run: poetry install
+      - name: Run mypy
+        run: poetry run mypy src/
       - name: Update README
         run: poetry run python src/main.py --live
       - name: Commit README and push
