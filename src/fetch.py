@@ -1,6 +1,6 @@
 from datetime import datetime, date
 from os import getenv
-from typing import Optional, Mapping
+from typing import Mapping
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
 
@@ -14,7 +14,7 @@ blog_repo_path = 'nfrankel%2Fnfrankel.gitlab.io'
 
 def bio() -> str:
     url = f'https://gitlab.com/api/v4/projects/{blog_repo_path}/repository/files/_data%2Fauthor%2Eyml/raw?ref=master'
-    token: Optional[str] = getenv('BLOG_REPO_TOKEN')
+    token: str | None = getenv('BLOG_REPO_TOKEN')
     if token is None:
         raise ValueError('BLOG_REPO_TOKEN environment variable is not set')
     headers: Mapping[str, str | bytes] | None = {'PRIVATE-TOKEN': token}
@@ -30,10 +30,10 @@ def posts() -> list[Post]:
     nodes: list[Element] = root.findall('./channel/item')[:3]
 
     def text_or_raise(node: Element, tag: str) -> str:
-        result: Optional[Element] = node.find(tag)
+        result: Element | None = node.find(tag)
         if result is None:
             raise ValueError(f'Could not find tag {tag}')
-        text: Optional[str] = result.text
+        text: str | None = result.text
         if text is None:
             raise ValueError(f'Could not find text for {tag}')
         return text
@@ -47,7 +47,7 @@ def posts() -> list[Post]:
 def talks() -> list[Talk]:
     confs_url = (f'https://gitlab.com/api/v4/projects/{blog_repo_path}/repository/files/_data%2Fconference%2Eyml/raw'
                  f'?ref=master')
-    token: Optional[str] = getenv('BLOG_REPO_TOKEN')
+    token: str | None = getenv('BLOG_REPO_TOKEN')
     if token is None:
         raise ValueError('BLOG_REPO_TOKEN environment variable is not set')
     headers: Mapping[str, str | bytes] | None = {'PRIVATE-TOKEN': token}

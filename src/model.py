@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Optional
 
 
 class Video:
@@ -21,7 +20,7 @@ class Post:
 
 
 class Conference:
-    def __init__(self, name: str, url: Optional[str]):
+    def __init__(self, name: str, url: str | None):
         self.name = name
         self.url = url
 
@@ -30,7 +29,7 @@ class Conference:
 
 
 class Talk:
-    def __init__(self, title: str, link: Optional[str], summary: Optional[str], start_date: datetime, conference: Conference):
+    def __init__(self, title: str, link: str | None, summary: str | None, start_date: datetime, conference: Conference):
         self.title = title
         self.link = link
         self.summary = summary
