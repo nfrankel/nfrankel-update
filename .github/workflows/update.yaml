@@ -6,7 +6,7 @@ on:
 
 jobs:
   update:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -19,12 +19,23 @@ jobs:
           path: nfrankel
           token:  ${{ secrets.NFRANKEL_GITHUB_TOKEN }}
           fetch-depth: 1
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: Set up Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.7.1
       - name: Install dependencies via Poetry
         run: poetry install
       - name: Run mypy
         run: poetry run mypy src/
       - name: Update README
         run: poetry run python src/main.py --live
+        env:
+          BLOG_REPO_TOKEN: ${{ secrets.BLOG_REPO_TOKEN }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       - name: Commit README and push
         uses: EndBug/add-and-commit@v9
         with:
