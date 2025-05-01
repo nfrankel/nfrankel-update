@@ -23,7 +23,7 @@ def bio() -> str:
 
 
 def posts() -> list[Post]:
-    url = 'https://blog.frankel.ch/feed.xml'
+    url = 'https://nfrankel.gitlab.io/feed.xml'
     headers: Mapping[str, str | bytes] | None = {'User-Agent': 'Mozilla/5.0'}
     text_response: str = get(url, headers=headers).content.decode('utf-8')
     root: Element = ElementTree.fromstring(text_response)
