@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1
       - name: Checkout profile repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: nfrankel/nfrankel
           path: nfrankel
